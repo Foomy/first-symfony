@@ -1,0 +1,27 @@
+{%  extends 'base.html.twig' %}
+{%  block body %}
+	<div id="sitewrapper">
+		<div id="pagewrapper">
+			<header>
+				<div id="logo">[:: Logo ::]</div>
+				<h1>[:: Title ::]</h1>
+			</header>
+
+			<nav>
+				<ul>
+					<li>Link 1</li>
+					<li>Link 2</li>
+					<li>Link n</li>
+				</ul>
+			</nav>
+
+			<div id="content">
+				{% block content %}{% endblock %}
+			</div>
+
+			<footer>
+				[:: Hier könnte Ihre Werbung stehen ::]
+			</footer>
+		</div>
+	</div>
+{% endblock %}

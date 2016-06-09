@@ -1,0 +1,26 @@
+app:
+  resource: "@AppBundle/Controller/"
+  type:     annotation
+
+lucky_number:
+  path: /lucky/number
+  defaults: { _controller: AppBundle:Lucky:number }
+lucky_number_json:
+  path: /lucky/number-json
+  defaults: { _controller: AppBundle:Lucky:numberJson }
+lucky_number_list:
+  path: /lucky/number-list/{count}
+  defaults: { _controller: AppBundle:Lucky:numberList }
+
+users:
+  path: /users/
+  defaults: { _controller: AppBundle:User:list }
+user_profile:
+  path: /user/profile/{userId}
+  defaults: { _controller: AppBundle:User:profile }
+user_form:
+  path: /user/form
+  defaults: { _controller: AppBundle:User:add }
+user_add:
+  path: /user/add
+  defaults: { _controller: AppBundle:User:create }
