@@ -3,7 +3,6 @@
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,17 +11,7 @@ class UserController extends Controller {
 
 	public function listAction() {
 
-		$users = [
-			[
-				'id' => 1,
-				'username' => 'SirFoomy',
-				'email'    => 'schneider@redhotmagma.de',
-				'firstName' => 'Sascha',
-				'lastName' => 'Schneider'
-			]
-		];
-
-
+		$users = $this->getDoctrine()->getRepository( 'AppBundle:User' )->findAll();
 
 		return $this->render(
 			'user/list.twig',
