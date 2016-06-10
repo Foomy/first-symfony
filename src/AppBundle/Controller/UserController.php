@@ -4,7 +4,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller {
@@ -18,6 +22,36 @@ class UserController extends Controller {
 			[
 				'title' => 'Userlist',
 				'users' => $users
+			]
+		);
+	}
+
+
+
+	public function editAction($userId) {
+
+		if ( (int) $userId <= 0 ) {
+			// @todo Show message and redirect to home.
+		}
+
+		$user = $this->getDoctrine()->getRepository( 'AppBundle:User' )->find( $userId );
+
+		$form = $this->createFormBuilder($user)
+			->add('username', TextType::class)
+			->add('email', TextType::class)
+			->add('firstName', TextType::class)
+			->add('lastName', TextType::class)
+			->add('dateOfBirth', DateType::class)
+			->add('aboutMe', TextType::class)
+			->add('save', SubmitType::class, array(
+				'label' => 'Speichern'
+			))
+			->getForm();
+
+		return $this->render(
+			'user/edit.twig', [
+				'user' => $user,
+				'form' => $form->createView(),
 			]
 		);
 	}

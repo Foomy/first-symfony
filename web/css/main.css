@@ -4,5 +4,22 @@ header #logo {
 }
 
 header h1 {
-	margin: 17px 0 0 50px;
+	margin-left: 30px;
+}
+
+
+/* userlist */
+
+#userlist .btn-add svg {
+}
+
+#userlist .btn-add svg,
+#userlist .btn-delete svg {
+	fill: white;
+}
+
+#userlist .btn-add,
+#userlist .btn-edit ,
+#userlist .btn-delete {
+	padding: 5px 4px 0 5px;
 }

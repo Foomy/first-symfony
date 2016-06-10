@@ -3,15 +3,23 @@
 	<div id="sitewrapper">
 		<div id="pagewrapper">
 			<header>
-				<div id="logo">[:: Logo ::]</div>
-				<h1>[:: Title ::]</h1>
+				<h1>First Symphony</h1>
 			</header>
 
-			<nav>
-				<ul class="navbar navbar-inverse">
-					<li>Link 1</li>
-					<li>Link 2</li>
-					<li>Link n</li>
+			<nav class="navbar navbar-inverse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="{{ path('home') }}">Home</a></li>
+					{% if user is defined %}
+					<li><a href="{{ path('user_profile', user.id) }}">Profil</a></li>
+					{% endif %}
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ path('users') }}">Userliste</a></li>
+				</ul>
+				<ul class="nav navbar-nav pull-right">
+					<li><a href="#">Anmelden</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="">Registrieren</a></li>
 				</ul>
 			</nav>
 
