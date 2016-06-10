@@ -9,10 +9,17 @@
 }
 
 header {
-
+	height: 100px;
+	padding: 10px;
 }
 
 #content {
 	min-height: 300px;
 	margin: 10px 20px;
+}
+
+footer {
+	border: solid black;
+	border-width: 1px 0 0 0;
+	padding: 10px;
 }

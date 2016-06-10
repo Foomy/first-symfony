@@ -28,8 +28,10 @@
 				<td>{{ user.firstName }}</td>
 				<td>{{ user.lastName }}</td>
 				<td>
-					<a href=""><img src="{{ asset('ico/16x16/pencil.png') }}" alt="pencil icon" title="bearbeiten" aria-label="Datensatz bearbeiten"></a>
-					<a href=""><img src="{{ asset('ico/16x16/delete.png') }}" alt="delete icon" title="löschen" aria-label="Datensatz löschen"></a>
+					<img src="{{ asset('ico/16x16/pencil.png') }}" id="edit_{{ user.id }}" data-uid="{{ user.id }}"
+					     alt="pencil icon" title="bearbeiten" aria-label="Datensatz bearbeiten">
+					<img src="{{ asset('ico/16x16/delete.png') }}" id="delete_{{ user.id }}" data-uid="{{ user.id }}"
+					     alt="delete icon" title="löschen" aria-label="Datensatz löschen">
 				</td>
 			</tr>
 		{% endfor %}

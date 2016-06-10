@@ -1,4 +1,8 @@
 
-#logo {
+header #logo {
 	float: left;
+}
+
+header h1 {
+	margin: 17px 0 0 50px;
 }
