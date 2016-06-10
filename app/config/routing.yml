@@ -21,3 +21,6 @@ user_add:
 user_create:
   path: /user/create
   defaults: { _controller: AppBundle:User:add }
+user_delete:
+  path: /user/delete/{userId}
+  defaults: { _controller: AppBundle:User:delete }

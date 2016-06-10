@@ -10,9 +10,6 @@ header h1 {
 
 /* userlist */
 
-#userlist .btn-add svg {
-}
-
 #userlist .btn-add svg,
 #userlist .btn-delete svg {
 	fill: white;

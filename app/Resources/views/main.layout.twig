@@ -9,13 +9,15 @@
 			<nav class="navbar navbar-inverse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="{{ path('home') }}">Home</a></li>
-					{% if user is defined %}
-					<li><a href="{{ path('user_profile', user.id) }}">Profil</a></li>
+					{% if loggedIn is defined %}
+					<li><a href="{{ path('user_profile', {'userId': user.id}) }}">Profil</a></li>
 					{% endif %}
 				</ul>
+
 				<ul class="nav navbar-nav">
 					<li><a href="{{ path('users') }}">Userliste</a></li>
 				</ul>
+
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="#">Anmelden</a></li>
 					<li role="separator" class="divider"></li>

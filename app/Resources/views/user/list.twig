@@ -1,11 +1,11 @@
 {% extends 'main.layout.twig' %}
 {% block title %}{{ title }}{% endblock %}
-{%  block content %}
-<div id="userlist">
-	<h2>{{ title }}</h2>
+{% block content %}
+	<div id="userlist">
+		<h2>{{ title }}</h2>
 
-	<table class="table table-responsive">
-		<thead>
+		<table class="table table-responsive">
+			<thead>
 			<tr>
 				<th>#</th>
 				<th>username</th>
@@ -14,8 +14,8 @@
 				<th>nachname</th>
 				<th>aktionen</th>
 			</tr>
-		</thead>
-		<tfoot>
+			</thead>
+			<tfoot>
 			<tr>
 				<td colspan="5">[:: paginator ::]</td>
 				<td>
@@ -24,26 +24,28 @@
 					</button>
 				</td>
 			</tr>
-		</tfoot>
-		<tbody>
-		{% for user in users %}
-			<tr>
-				<td>{{ user.id }}</td>
-				<td>{{ user.username }}</td>
-				<td>{{ user.email }}</td>
-				<td>{{ user.firstName }}</td>
-				<td>{{ user.lastName }}</td>
-				<td>
-					<button class="btn btn-default btn-edit" id="btn-edt_{{ user.id }}" data-uid="{{ user.id }}" title="bearbeiten">
-						{% include '_partials/icons/edit.svg.twig' %}
-					</button>
-					<button class="btn btn-danger btn-delete" id="btn-del_{{ user.id }}" data-uid="{{ user.id }}">
-						{% include'_partials/icons/delete.svg.twig' %}
-					</button>
-				</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-</div>
+			</tfoot>
+			<tbody>
+			{% for user in users %}
+				<tr id="user-{{ user.id }}">
+					<td>{{ user.id }}</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.firstName }}</td>
+					<td>{{ user.lastName }}</td>
+					<td>
+						<a href="{{ path('user_edit', {'userId': user.id}) }}">
+							<button class="btn btn-default btn-edit" id="btn-edt_{{ user.id }}" data-uid="{{ user.id }}" title="bearbeiten">
+								{% include '_partials/icons/edit.svg.twig' %}
+							</button></a>
+						<button class="btn btn-danger btn-delete" id="btn-del_{{ user.id }}"
+						        data-uid="{{ user.id }}" data-path="{{ path('user_delete', {'userId': user.id}) }}">
+							{% include'_partials/icons/delete.svg.twig' %}
+						</button>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}
