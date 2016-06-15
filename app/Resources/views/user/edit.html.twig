@@ -1,0 +1,19 @@
+{% extends 'layout-main.html.twig' %}
+{% block title %}{{ title }} - First Symfony{% endblock %}
+
+{% block content %}
+	<div id="page-title">
+		{% if editMode is defined %}
+			<div class="icon">{% include '_partials/icons/edit-user.svg.twig' %}</div>
+		{% else %}
+			<div class="icon">{% include '_partials/icons/add-user.svg.twig' %}</div>
+		{% endif %}
+		<h2>{{ title }}</h2>
+	</div>
+
+	<span id="back-url" data-url="{{ path('users') }}" class="hidden"></span>
+	{% form_theme form with ['form/buttons.html.twig'] %}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+{% endblock %}

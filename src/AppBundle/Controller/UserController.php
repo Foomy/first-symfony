@@ -4,12 +4,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-
+use AppBundle\Form\Type\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller {
 
@@ -18,9 +16,9 @@ class UserController extends Controller {
 		$users = $this->getDoctrine()->getRepository( 'AppBundle:User' )->findAll();
 
 		return $this->render(
-			'user/list.twig',
+			'user/list.html.twig',
 			[
-				'title' => 'Userlist',
+				'title' => 'Users',
 				'users' => $users
 			]
 		);
@@ -28,63 +26,123 @@ class UserController extends Controller {
 
 
 
-	public function editAction( $userId ) {
+	public function loginAction() {
 
-		if( (int)$userId <= 0 ) {
-			// @todo Show message and redirect to home.
+	}
+
+
+
+	public function logoutAction() {
+
+	}
+
+
+
+	public function registerAction( Request $request ) {
+
+		$form = $this->createForm( UserType::class, new User() );
+		$form->handleRequest( $request );
+
+		if( $form->isSubmitted() && $form->isValid() ) {
+			$user = $form->getData();
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist( $user );
+			$em->flush();
+
+			// @todo Show success message
+			return $this->redirectToRoute( 'users' );
 		}
 
-		$user = $this->getDoctrine()->getRepository( 'AppBundle:User' )->find( $userId );
-
-		$form = $this->createFormBuilder( $user )
-		             ->add( 'username', TextType::class )
-		             ->add( 'email', TextType::class )
-		             ->add( 'firstName', TextType::class )
-		             ->add( 'lastName', TextType::class )
-		             ->add( 'dateOfBirth', DateType::class )
-		             ->add( 'aboutMe', TextType::class )
-		             ->add( 'save', SubmitType::class, array(
-			             'label' => 'Speichern'
-		             ) )
-		             ->getForm();
-
 		return $this->render(
-			'user/edit.twig', [
-				'user' => $user,
-				'form' => $form->createView(),
+			'user/edit.html.twig', [
+				'title' => 'User Registration',
+				'form'  => $form->createView(),
 			]
 		);
 	}
 
 
 
-	public function addAction() {
+	public function addAction( Request $request ) {
+
+		$form = $this->createForm( UserType::class, new User() );
+		$form->handleRequest( $request );
+
+		if( $form->isSubmitted() && $form->isValid() ) {
+			$user = $form->getData();
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist( $user );
+			$em->flush();
+
+			// @todo Show success message
+			return $this->redirectToRoute( 'users' );
+		}
 
 		return $this->render(
-			'user/add.twig'
+			'user/edit.html.twig', [
+				'title' => 'Add User',
+				'form'  => $form->createView(),
+			]
 		);
 	}
 
 
 
-	public function createAction() {
+	public function editAction( $userId, Request $request ) {
 
-		$user = new User();
-		$user->setUsername( 'SirFoomy' );
-		$user->setFirstName( 'Sascha' );
-		$user->setLastName( 'Schneider' );
-		$user->setEmail( 'sir.foomy@googlemail.com' );
+		if( (int)$userId <= 0 ) {
+			// @todo Show invalid argument error message
+			return $this->redirectToRoute( 'users' );
+		}
 
-		$em = $this->getDoctrine()->getManager();
-		$em->persist( $user );
-		$em->flush();
+		$user = $this->getDoctrine()->getRepository( 'AppBundle:User' )->find( $userId );
 
-		return new Response( 'Saved new user with id ' . $user->getId() );
+		$form = $this->createForm( UserType::class, $user );
+		$form->handleRequest( $request );
+
+		if( $form->isSubmitted() && $form->isValid() ) {
+			$user = $form->getData();
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist( $user );
+			$em->flush();
+
+			// @todo Show success message
+			return $this->redirectToRoute( 'users' );
+		}
+
+		return $this->render(
+			'user/edit.html.twig', [
+				'title'    => 'Edit User',
+				'user'     => $user,
+				'form'     => $form->createView(),
+				'editMode' => true
+			]
+		);
 	}
 
 
 
-	public function deleteAction( $userId ) {
+	public function deleteAction( $userId, Request $request ) {
 
+		if( !$request->isXmlHttpRequest() ) {
+			return $this->redirectToRoute( 'users' );
+		}
+
+		if( (int)$userId <= 0 ) {
+			return new JsonResponse( 'Invalid argument error: ' . $userId, 500 );
+		}
+
+		$user = $this->getDoctrine()->getRepository( 'AppBundle:User' )->find( $userId );
+
+		$em = $this->getDoctrine()->getManager();
+		$em->remove( $user );
+		$em->flush();
+
+		return new JsonResponse( array(
+			'msg' => 'User with ID »' . $userId . '« deleted.'
+		) );
 	}
 }

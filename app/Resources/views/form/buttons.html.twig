@@ -1,0 +1,22 @@
+{% use "bootstrap_3_layout.html.twig" %}
+
+{% block submit_widget -%}
+	{% set attr = attr|merge({class: (attr.class|default('btn-success') ~ ' btn')|trim}) %}
+	{{- parent() -}}
+{%- endblock %}
+
+
+{% block button_row -%}
+	<div class="form-group form-ctrl">
+		{{- form_widget(form) -}}
+	</div>
+{%- endblock button_row %}
+
+{%- block form_widget -%}
+	{% if compound %}
+		{{- block('form_widget_compound') -}}
+	{% else %}
+		{{- block('form_widget_simple') -}}
+	{% endif %}
+	<div class="clearfix"></div>
+{%- endblock form_widget -%}

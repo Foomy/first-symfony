@@ -10,6 +10,20 @@ header h1 {
 
 /* userlist */
 
+#page-title .icon {
+	width: 48px;
+	height: 48px;
+	float: left;
+	margin-right: 7px;
+}
+#page-title .icon svg {
+	fill: #dd4d0b;
+}
+#page-title h2 {
+	line-height: 50px;
+}
+
+
 #userlist .btn-add svg,
 #userlist .btn-delete svg {
 	fill: white;

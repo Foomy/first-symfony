@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class User
@@ -29,12 +30,16 @@ class User {
 	/**
 	 * @ORM\Column(type="string", length=25)
 	 *
+	 * @Assert\NotBlank()
+	 *
 	 * @var string $username
 	 */
 	private $username;
 
 	/**
 	 * @ORM\Column(type="string", length=100)
+	 *
+	 * @Assert\NotBlank()
 	 *
 	 * @var string $email
 	 */
@@ -56,6 +61,8 @@ class User {
 
 	/**
 	 * @ORM\Column(type="date")
+	 *
+	 * @Assert\Type("\DateTime")
 	 *
 	 * @var \DateTime $dateOfBirth
 	 */
