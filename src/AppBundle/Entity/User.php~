@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class User
@@ -29,6 +30,8 @@ class User {
 	/**
 	 * @ORM\Column(type="string", length=25)
 	 *
+	 * @Assert\NotBlank()
+	 *
 	 * @var string $username
 	 */
 	private $username;
@@ -36,43 +39,62 @@ class User {
 	/**
 	 * @ORM\Column(type="string", length=100)
 	 *
+	 * @Assert\NotBlank()
+	 *
 	 * @var string $email
 	 */
 	private $email;
 
 	/**
-	 * @ORM\Column(type="string", length=50)
+	 * @ORM\Column(type="string", length=50,nullable=true)
 	 *
 	 * @var string $firstName
 	 */
 	private $firstName;
 
 	/**
-	 * @ORM\Column(type="string", length=50)
+	 * @ORM\Column(type="string", length=50,nullable=true)
 	 *
 	 * @var string $lastName
 	 */
 	private $lastName;
 
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="date")
+	 *
+	 * @Assert\Type("\DateTime")
 	 *
 	 * @var \DateTime $dateOfBirth
 	 */
 	private $dateOfBirth;
 
 	/**
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text",nullable=true)
 	 *
 	 * @var string $aboutMe
 	 */
 	private $aboutMe;
 
+	/**
+	 * @ORM\Column(type="boolean",nullable=false)
+	 *
+	 * @var bool $isConfirmed
+	 */
+	private $isConfirmed = false;
+
+
+	/**
+	 * @ORM\Column(type="string",nullable=true)
+	 *
+	 * @var string $hash
+	 */
+	private $hash;
 
 
 	public function __construct() {
 
-		$this->dateOfBirth = new \DateTime();
+		// @todo Set date to default date.
+		$this->dateOfBirth = new \DateTime( '0000-00-00' );
 	}
 
 
@@ -253,5 +275,33 @@ class User {
 	public function getAboutMe() {
 
 		return $this->aboutMe;
+	}
+
+
+
+	/**
+	 * Set isConfirmed
+	 *
+	 * @param bool $isConfirmed
+	 *
+	 * @return User
+	 */
+	public function setIsConfirmed( $isConfirmed ) {
+
+		$this->isConfirmed = $isConfirmed;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get isConfirmed
+	 *
+	 * @return bool
+	 */
+	public function getIsConfirmed() {
+
+		return $this->isConfirmed;
 	}
 }

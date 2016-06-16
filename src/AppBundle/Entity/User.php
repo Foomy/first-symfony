@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package AppBundle\Entity
  */
-class User {
+class User extends Entity {
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -75,12 +75,26 @@ class User {
 	 */
 	private $aboutMe;
 
+	/**
+	 * @ORM\Column(type="boolean",nullable=false)
+	 *
+	 * @var bool $isConfirmed
+	 */
+	private $isConfirmed = false;
+
+
+	/**
+	 * @ORM\Column(type="string",nullable=true)
+	 *
+	 * @var string $hash
+	 */
+	private $hash;
 
 
 	public function __construct() {
 
-		// @todo Set date to default date.
-		$this->dateOfBirth = new \DateTime('0000-00-00');
+		$defaultDate = '0000-00-00'; // @todo get this value form config
+		$this->dateOfBirth = new \DateTime( $defaultDate );
 	}
 
 
@@ -262,4 +276,56 @@ class User {
 
 		return $this->aboutMe;
 	}
+
+
+
+	/**
+	 * Set isConfirmed
+	 *
+	 * @param bool $isConfirmed
+	 *
+	 * @return User
+	 */
+	public function setIsConfirmed( $isConfirmed ) {
+
+		$this->isConfirmed = $isConfirmed;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get isConfirmed
+	 *
+	 * @return bool
+	 */
+	public function getIsConfirmed() {
+
+		return $this->isConfirmed;
+	}
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     *
+     * @return User
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
 }

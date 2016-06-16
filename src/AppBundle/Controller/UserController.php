@@ -50,8 +50,8 @@ class UserController extends Controller {
 			$em->persist( $user );
 			$em->flush();
 
-			// @todo Show success message
-			return $this->redirectToRoute( 'users' );
+			// @todo Generate temp user hash
+			// @todo Send confirmation email
 		}
 
 		return $this->render(
