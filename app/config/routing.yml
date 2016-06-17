@@ -5,28 +5,29 @@ app:
 home:
   path: /
   defaults: { _controller: AppBundle:Default:index }
+user_register:
+  path: /register/
+  defaults: { _controller: AppBundle:User:register }
+user_login:
+  path: /login/
+  defaults: { _controller: AppBundle:User:login }
+
+user_profile:
+  path: /user/profile/{userId}
+  defaults: { _controller: AppBundle:User:profile }
+user_edit:
+  path: /user/edit/{userId}
+  defaults: { _controller: AppBundle:User:edit }
+user_logout:
+  path: /logout/
+  defaults: { _controller: AppBundle:User:logout }
 
 users:
   path: /users/
   defaults: { _controller: AppBundle:User:list }
-user_login:
-  path: /login/
-  defaults: { _controller: AppBundle:User:login }
-user_logout:
-  path: /logout/
-  defaults: { _controller: AppBundle:User:logout }
-user_register:
-  path: /register/
-  defaults: { _controller: AppBundle:User:register }
-user_profile:
-  path: /user/profile/{userId}
-  defaults: { _controller: AppBundle:User:profile }
 user_add:
-  path: /user/add
+  path: /user/add/
   defaults: { _controller: AppBundle:User:add }
-user_edit:
-  path: /user/edit/{userId}
-  defaults: { _controller: AppBundle:User:edit }
 user_delete:
   path: /user/delete/{userId}
   defaults: { _controller: AppBundle:User:delete }

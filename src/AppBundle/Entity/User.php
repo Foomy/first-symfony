@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,7 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package AppBundle\Entity
  */
-class User extends Entity {
+class User extends Entity
+	implements AdvancedUserInterface, \Serializable {
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -35,6 +37,16 @@ class User extends Entity {
 	 * @var string $username
 	 */
 	private $username;
+
+
+	/**
+	 * @ORM\Column(type="string", length=100,nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 *
+	 * @var string $password
+	 */
+	private $password;
 
 	/**
 	 * @ORM\Column(type="string", length=100)
@@ -77,22 +89,15 @@ class User extends Entity {
 
 	/**
 	 * @ORM\Column(type="boolean",nullable=false)
-	 *
-	 * @var bool $isConfirmed
+	 * @var bool $isActive
 	 */
-	private $isConfirmed = false;
+	private $isActive;
 
-
-	/**
-	 * @ORM\Column(type="string",nullable=true)
-	 *
-	 * @var string $hash
-	 */
-	private $hash;
 
 
 	public function __construct() {
 
+		$this->isActive    = true;
 		$this->dateOfBirth = new \DateTime( self::DATE_DEFAULT );
 	}
 
@@ -304,27 +309,167 @@ class User extends Entity {
 		return $this->isConfirmed;
 	}
 
-    /**
-     * Set hash
-     *
-     * @param string $hash
-     *
-     * @return User
-     */
-    public function setHash($hash)
-    {
-        $this->hash = $hash;
 
-        return $this;
-    }
 
-    /**
-     * Get hash
-     *
-     * @return string
-     */
-    public function getHash()
-    {
-        return $this->hash;
-    }
+	/**
+	 * Set hash
+	 *
+	 * @param string $hash
+	 *
+	 * @return User
+	 */
+	public function setHash( $hash ) {
+
+		$this->hash = $hash;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get hash
+	 *
+	 * @return string
+	 */
+	public function getHash() {
+
+		return $this->hash;
+	}
+
+
+
+	/**
+	 * Set password
+	 *
+	 * @param string $password
+	 *
+	 * @return User
+	 */
+	public function setPassword( $password ) {
+
+		$this->password = $password;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get password
+	 *
+	 * @return string
+	 */
+	public function getPassword() {
+
+		return $this->password;
+	}
+
+
+
+	/**
+	 * Set isActive
+	 *
+	 * @param boolean $isActive
+	 *
+	 * @return User
+	 */
+	public function setIsActive( $isActive ) {
+
+		$this->isActive = $isActive;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get isActive
+	 *
+	 * @return boolean
+	 */
+	public function getIsActive() {
+
+		return $this->isActive;
+	}
+
+
+
+	/**
+	 * Since this app uses bcrypt to hash the passwords this method is not
+	 * in use and therefore return null.
+	 *
+	 * @author Sascha Schneider <schneider@redhotmagma.de>
+	 * @since  2016-06
+	 *
+	 * @return null
+	 */
+	public function getSalt() {
+
+		return null;
+	}
+
+
+
+	public function getRoles() {
+
+		return array('ROLE_USER');
+	}
+
+
+
+	public function eraseCredentials() {
+	}
+
+
+
+	public function isAccountNonExpired() {
+
+		return true;
+	}
+
+
+
+	public function isAccountNonLocked() {
+
+		return true;
+	}
+
+
+
+	public function isCredentialsNonExpired() {
+
+		return true;
+	}
+
+
+
+	public function isEnabled() {
+
+		return $this->isActive;
+	}
+
+
+
+	public function serialize() {
+
+		return serialize( array(
+			$this->id,
+			$this->email,
+			$this->password,
+			$this->isActive
+		) );
+	}
+
+
+
+	public function unserialize( $serialized ) {
+
+		list(
+			$this->id,
+			$this->email,
+			$this->password,
+			$this->isActive
+			) = unserialize( $serialized );
+	}
 }

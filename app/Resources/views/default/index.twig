@@ -1,8 +1,38 @@
 {% extends 'layout-main.html.twig' %}
 {% block content %}
-	<h2>Willkommen</h2>
+	<h3>Warum gibt es hier nicht zu sehen?</h3>
 	<p>
-		Bei dieser Anwendung handelt es sich um eine Testumsetzung. Der einzige Sinn besteht darin mir Symphony und Doctrine näher zu bringen.
-		Deshalb gibt es hier auch nicht viel zu sehen. Man kann sich registrieren, anmelden und seine Profilseite bearbeiten.
+		Bei dieser Projekt handelt es sich um eine Anwendung zu Schulungszwecken, dereb einziger Sinn darin besteht mir
+		Symphony und Doctrine näher zu bringen. Als Umsetzung hab ich mich
+		für eine Benutzerverwaltung entschieden, da dies eine Kernkomponente vieler Webanwendungen ist, und möglichst
+		viel Einblick in die Funktionsweise des Frameworks bietet.
 	</p>
+
+	<h3>Aha, und was genu kann diese Benutzerverwaltung?</h3>
+	<p>Es gibt je nachdem als was man angemeldet ist folgende Features:</p>
+	<ul>
+		<li>
+			<span class="bold">Anonym (Keine Anmeldung)</span>
+			<ul>
+				<li>Homepage (Diese Seite hier)</li>
+				<li>Login</li>
+			</ul>
+		</li>
+		<li>
+			<span class="bold">User</span>
+			<ul>
+				<li>Profilseite</li>
+				<li>Profil bearbeiten</li>
+			</ul>
+		</li>
+		<li>
+			<span class="bold">Admin</span>
+			<ul>
+				<li>Benutzerliste</li>
+				<li>Benutzer erstellen</li>
+				<li>Benutzer bearbeiten</li>
+				<li>Benutzer löschen</li>
+			</ul>
+		</li>
+	</ul>
 {% endblock %}

@@ -4,8 +4,24 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+#        in_memory:
+#            memory:
+#                users:
+#                  sirfoomy:
+#                      password: $2y$12$HjvoiUD4s3FCF4f/Vtibe.EuqO7km59/31.X/i4vgiDf2m.AH74MO
+#                      roles: 'ROLE_USER'
+#                  admin:
+#                      password: $2y$12$l5RT6rSsKaciCYb..i5E2OfRwssdLvPwtdVegCC63kh8jWT1sDVU6
+#                      roles: 'ROLE_ADMIN'
+        our_db_provider:
+            entity:
+                class: AppBundle:User
+                property: email
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -17,8 +33,17 @@ security:
             anonymous: ~
             # activate different ways to authenticate
 
-            # http_basic: ~
+            http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+            provider: our_db_provider
+
+    access_control:
+        - { path: ^/users/, roles: ROLE_ADMIN }
+        - { path: ^/user/add/, roles: ROLE_ADMIN }
+        - { path: ^/user/profile/^, roles: ROLE_USER }
+        - { path: ^/user/edit/, roles: ROLE_USER }
+        - { path: ^/user/logout/, roles: ROLE_USER }

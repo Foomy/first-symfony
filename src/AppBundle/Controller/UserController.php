@@ -11,6 +11,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller {
 
+
+	public function loginAction() {
+
+	}
+
+
+
+	public function logoutAction() {
+
+	}
+
+
+
+	public function profileAction() {
+
+	}
+
+
+
 	public function listAction() {
 
 		$users = $this->getDoctrine()->getRepository( 'AppBundle:User' )->findAll();
@@ -26,25 +45,17 @@ class UserController extends Controller {
 
 
 
-	public function loginAction() {
-
-	}
-
-
-
-	public function logoutAction() {
-
-	}
-
-
-
 	public function registerAction( Request $request ) {
 
 		$form = $this->createForm( UserType::class, new User() );
 		$form->handleRequest( $request );
 
 		if( $form->isSubmitted() && $form->isValid() ) {
+			/** @var User $user */
 			$user = $form->getData();
+
+			$hash = $this->createHash( $user->getPassword() );
+			$user->setHash( $hash );
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist( $user );

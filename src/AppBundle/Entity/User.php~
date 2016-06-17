@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,7 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package AppBundle\Entity
  */
-class User {
+class User extends Entity
+	implements UserInterface, \Serializable {
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -35,6 +37,16 @@ class User {
 	 * @var string $username
 	 */
 	private $username;
+
+
+	/**
+	 * @ORM\Column(type="string", length=100,nullable=false)
+	 *
+	 * @Assert\NotBlank()
+	 *
+	 * @var string $password
+	 */
+	private $password;
 
 	/**
 	 * @ORM\Column(type="string", length=100)
@@ -77,24 +89,16 @@ class User {
 
 	/**
 	 * @ORM\Column(type="boolean",nullable=false)
-	 *
-	 * @var bool $isConfirmed
+	 * @var bool $isActive
 	 */
-	private $isConfirmed = false;
+	private $isActive;
 
-
-	/**
-	 * @ORM\Column(type="string",nullable=true)
-	 *
-	 * @var string $hash
-	 */
-	private $hash;
 
 
 	public function __construct() {
 
-		// @todo Set date to default date.
-		$this->dateOfBirth = new \DateTime( '0000-00-00' );
+		$this->isActive    = true;
+		$this->dateOfBirth = new \DateTime( self::DATE_DEFAULT );
 	}
 
 
@@ -303,5 +307,116 @@ class User {
 	public function getIsConfirmed() {
 
 		return $this->isConfirmed;
+	}
+
+
+
+	/**
+	 * Set hash
+	 *
+	 * @param string $hash
+	 *
+	 * @return User
+	 */
+	public function setHash( $hash ) {
+
+		$this->hash = $hash;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get hash
+	 *
+	 * @return string
+	 */
+	public function getHash() {
+
+		return $this->hash;
+	}
+
+
+
+	/**
+	 * Set password
+	 *
+	 * @param string $password
+	 *
+	 * @return User
+	 */
+	public function setPassword( $password ) {
+
+		$this->password = $password;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get password
+	 *
+	 * @return string
+	 */
+	public function getPassword() {
+
+		return $this->password;
+	}
+
+
+
+	/**
+	 * Set isActive
+	 *
+	 * @param boolean $isActive
+	 *
+	 * @return User
+	 */
+	public function setIsActive( $isActive ) {
+
+		$this->isActive = $isActive;
+
+		return $this;
+	}
+
+
+
+	/**
+	 * Get isActive
+	 *
+	 * @return boolean
+	 */
+	public function getIsActive() {
+
+		return $this->isActive;
+	}
+
+	public function getSalt() {
+		return null;
+	}
+
+	public function getRoles() {
+		return array('ROLE_USER');
+	}
+
+	public function eraseCredentials() {
+	}
+
+	public function serialize() {
+		return serialize( array(
+			$this->id,
+			$this->email,
+			$this->password,
+		) );
+	}
+
+	public function unserialize( $serialized ) {
+		list(
+			$this->id,
+			$this->email,
+			$this->password,
+		) = unserialize( $serialized );
 	}
 }
