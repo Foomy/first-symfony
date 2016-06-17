@@ -93,8 +93,7 @@ class User extends Entity {
 
 	public function __construct() {
 
-		$defaultDate = '0000-00-00'; // @todo get this value form config
-		$this->dateOfBirth = new \DateTime( $defaultDate );
+		$this->dateOfBirth = new \DateTime( self::DATE_DEFAULT );
 	}
 
 
