@@ -18,12 +18,13 @@
 				<th>email</th>
 				<th>vorname</th>
 				<th>nachname</th>
+				<th>aktiv</th>
 				<th>aktionen</th>
 			</tr>
 			</thead>
 			<tfoot>
 			<tr>
-				<td colspan="5">[:: paginator ::]</td>
+				<td colspan="6">[:: paginator ::]</td>
 				<td>
 					<a href="{{ path('user_add') }}">
 					<button class="btn btn-success btn-add" id="btn-add">
@@ -40,6 +41,16 @@
 					<td>{{ user.email }}</td>
 					<td>{{ user.firstName }}</td>
 					<td>{{ user.lastName }}</td>
+					<td>
+							{% if (user.isEnabled) %}
+							<input title="" type="checkbox" id="userIsEnabled"
+							       data-toggle="toggle" data-height="26" data-onstyle="success" data-offstyle="danger" data-on="akitv" data-off="inaktiv"
+							       checked>
+							{% else %}
+							<input title="" type="checkbox" id="userIsEnabled"
+							       data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="akitv" data-off="inaktiv">
+							{% endif %}
+					</td>
 					<td>
 						<a href="{{ path('user_edit', {'userId': user.id}) }}">
 							<button class="btn btn-default btn-edit" id="btn-edt_{{ user.id }}" data-uid="{{ user.id }}" title="bearbeiten">

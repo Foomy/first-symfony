@@ -284,62 +284,6 @@ class User extends Entity
 
 
 	/**
-	 * Set isConfirmed
-	 *
-	 * @param bool $isConfirmed
-	 *
-	 * @return User
-	 */
-	public function setIsConfirmed( $isConfirmed ) {
-
-		$this->isConfirmed = $isConfirmed;
-
-		return $this;
-	}
-
-
-
-	/**
-	 * Get isConfirmed
-	 *
-	 * @return bool
-	 */
-	public function getIsConfirmed() {
-
-		return $this->isConfirmed;
-	}
-
-
-
-	/**
-	 * Set hash
-	 *
-	 * @param string $hash
-	 *
-	 * @return User
-	 */
-	public function setHash( $hash ) {
-
-		$this->hash = $hash;
-
-		return $this;
-	}
-
-
-
-	/**
-	 * Get hash
-	 *
-	 * @return string
-	 */
-	public function getHash() {
-
-		return $this->hash;
-	}
-
-
-
-	/**
 	 * Set password
 	 *
 	 * @param string $password
@@ -413,7 +357,7 @@ class User extends Entity
 
 	public function getRoles() {
 
-		return array('ROLE_USER');
+		return array('ROLE_ADMIN');
 	}
 
 

@@ -2,6 +2,15 @@
 
 	init: function () {
 		this.initDeleteBtns();
+		this.initActiveToggles();
+	},
+
+	initActiveToggles: function () {
+
+	},
+
+	handleActiveToggle: function (uid) {
+
 	},
 
 	initDeleteBtns: function () {

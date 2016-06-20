@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+
+function setPermissions() {
+	for i in $(find var); do
+		if test -d "${i}"; then
+			sudo chmod 775 "${i}";
+		else
+			sudo chmod 664 "${i}";
+		fi
+	done
+}
+
+
+setPermissions
+php bin/console cache:clear
+php bin/console cache:clear -e prod
+setPermissions

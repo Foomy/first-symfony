@@ -18,6 +18,13 @@ class UserType extends AbstractType {
 			->add( 'lastName' )
 			->add( 'dateOfBirth', null, ['widget' => 'choice'] )
 			->add( 'aboutMe' )
+			->add( 'isActive', ToggleType::class, array(
+				'choiceon'  => 'aktiv',
+				'choiceoff' => 'inaktiv',
+				'height' => 26,
+				'styleon' => 'success',
+				'styleoff' => 'danger'
+			) )
 			->add( 'save', SubmitType::class, ['label' => 'Speichern'])
 			->add( 'cancel', ButtonType::class, ['label' => 'Abbrechen']);
 	}
